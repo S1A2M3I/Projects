@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  <style>
+    body {
+      background: #f5f5f5;
+      font-family: Arial, sans-serif;
+    }
+
+    nav {
+      background: #ff5733;
+      color: white;
+      padding: 10px 0;
+      animation: slideDown 1s ease;
+    }
+
+    nav h1 {
+      margin: 0;
+    }
+
+    .container {
+      margin-top: 50px;
+    }
+
+    .weather-box {
+      background: white;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards;
+      transition: all 0.3s ease;
+    }
+
+    .weather-box:hover {
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      transform: translateY(-10px);
+    }
+
+    .weather-box h3 {
+      margin-top: 0;
+      color: #ff5733;
+      animation: growIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-50px);
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes growIn {
+      from {
+        transform: scale(0.8);
+      }
+      to {
+        transform: scale(1);
+      }
+    }
+
+    .input-group {
+      position: relative;
+    }
+
+    .input-group input {
+      transition: box-shadow 0.3s ease;
+    }
+
+    .input-group input:focus {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .input-group-btn button {
+      transition: background 0.3s ease;
+    }
+
+    .input-group-btn button:hover {
+      background: #c0392b;
+    }
+
+    .error-message {
+      color: #e74c3c;
+      font-weight: bold;
+    }
+
+    .city-image {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="text-center">
+    <h1>Weather App</h1>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <form method="post">
+          {% csrf_token %}
+          <div class="input-group">
+            <input type="text" class="form-control" name="city" placeholder="Enter city name">
+            <span class="input-group-btn">
+              <button class="btn btn-danger" type="submit">
+                <i class="glyphicon glyphicon-search"></i> Search
+              </button>
+            </span>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+      {% if error %}
+      <div class="col-md-6 col-md-offset-3">
+        <div class="weather-box text-center">
+          <p class="error-message">{{ error }}</p>
+        </div>
+      </div>
+      {% elif country_code and coordinate and temp and pressure and humidity %}
+      <div class="col-md-6 col-md-offset-3">
+        <div class="weather-box text-center">
+          <h3>Weather Details for {{ city }}</h3>
+          <p><strong>Country Code:</strong> {{country_code}}</p>
+          <p><strong>City:</strong> {{city}}</p>
+          <p><strong>Coordinate:</strong> {{coordinate}}</p>
+          <p><strong>Temperature:</strong> {{temp}}°C</p>
+          <p><strong>Pressure:</strong> {{pressure}} hPa</p>
+          <p><strong>Humidity:</strong> {{humidity}}%</p>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- Bootstrap JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Posts</title>
+</head>
+<body>
+    <h1>All Blog Posts</h1>
+    <ul>
+        {% for post in posts %}
+        <h1>
+            <li>
+                <a href="{% url 'post_detail' post.id %}">{{ post.title }} <br> id:{{ post.id }}</a>
+            </li>
+        </h1>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'createpost' %}"><h1>Create New Post</h1></a>
+</body>
+</html>
