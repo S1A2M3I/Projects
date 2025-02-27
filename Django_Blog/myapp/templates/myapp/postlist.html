@@ -1,21 +1,45 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog Posts</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Animate.css for animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <style>
+        body {
+            @apply bg-gradient-to-r from-blue-100 to-purple-200 min-h-screen flex flex-col items-center justify-center;
+        }
+    </style>
 </head>
 <body>
-    <h1>All Blog Posts</h1>
-    <ul>
-        {% for post in posts %}
-        <h1>
-            <li>
-                <a href="{% url 'post_detail' post.id %}">{{ post.title }} <br> id:{{ post.id }}</a>
-            </li>
+    <div class="w-full max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-lg animate__animated animate__fadeIn">
+        <h1 class="text-4xl font-bold text-gray-800 text-center mb-6 animate__animated animate__fadeInDown">
+            📖 All Blog Posts
         </h1>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'createpost' %}"><h1>Create New Post</h1></a>
+        
+        <ul class="space-y-4">
+            {% for post in posts %}
+            <li class="p-4 bg-gray-100 rounded-lg shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+                <a href="{% url 'post_detail' post.id %}" class="text-xl font-semibold text-blue-600 hover:underline">
+                    {{ post.title }} <br> <span class="text-sm text-gray-500">🆔 ID: {{ post.id }}</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <div class="mt-6 text-center">
+            <a href="{% url 'createpost' %}" 
+               class="px-6 py-3 bg-green-500 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-green-700 transition-all duration-300">
+               ➕ Create New Post
+            </a>
+        </div>
+    </div>
 </body>
 </html>
